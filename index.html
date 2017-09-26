@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Disney Hangman</title>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/waltograph" type="text/css"/>
+	
+	<!-- <link rel="stylesheet" type="text/css" href="assets/css/reset.css" /> -->
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+	
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+</head>
+
+
+<body>
+
+	<header>
+		<h1>Disney Hangman</h1>
+	</header>
+
+	<div class="container">
+		<!-- pictures -->
+		<div class="row">
+			<div id="picDiv" class="col-md-6"> 
+				<h4>example text</h4>
+			</div>
+
+			<!-- game -->
+			<div id="gameDiv" class="col-md-6">
+				<h5>Press any key to get started!</h5>
+				<h5>Wins:</h5>
+					<h6 id="wins">0</h6>
+				<h5 id="solve"></h5>
+				<h5>Number of Guesses Remaining:</h5>
+					<h6 id="guesses">15</h6>
+				<h5>Letters Already Guessed:</h5>
+					<h6 id="guessed"></h6>
+			</div>
+		</div>
+
+	</div>
+
+<script src="assets/javascript/game.js"></script>
+
+</body>
+
+
+</html>

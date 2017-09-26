@@ -1,0 +1,21 @@
+body {
+	background-image: url("../images/disney.jpg");
+}
+
+h1 { 
+   font-family: 'WaltographRegular'; 
+   font-weight: normal; 
+   font-size: 75px;
+   text-align: center;
+}
+
+.container {
+	text-align: center;
+}
+
+#picDiv, #gameDiv {
+	border: 1px #444 solid;
+	margin: 15px 0;
+	display: inline-block;
+	padding: 10px;
+}
