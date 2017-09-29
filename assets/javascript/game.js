@@ -5,6 +5,8 @@ $(document).ready(function() {
 	var winCount = 0;
 	var words = ['CINDERELLA','ALICE','BAMBI','PINOCCHIO','FANTASIA','MICKEY','DONALD','GOOFY'];
 	var activeWord;
+	var activeClone;
+	var userGuessWord;
 
 
 	function chooseWord() {
@@ -15,51 +17,59 @@ $(document).ready(function() {
 
 	function newWord() {
 		for (var i = 0; i < activeWord.length; i++) {
-			$("#solve").append("_ ");
-			// $("#solve").append("<p id='blankSpace'"+i+" > _</p> "); //maybe make id="blankSpace-1" for each space and replace with letter if matches
-			// console.log(activeWord);
+			$("#solve").append('<h6 class="letters" id="letter'+ i +'">_ ');
 		};
+		lettersGuessed = [];
+		tries = 15;
+		$("#guesses").text(tries);
+		$("#guessed").text("");	
+		activeClone   = activeWord;
+    	userGuessWord = Array(activeClone.length+1).join("_");
 	};
+
+	function isLetter(str) {
+		return str>64 && str <91;
+	}
 
 	chooseWord();
 	console.log(activeWord);
 	newWord();
 
-	// checking every letter in console log
-	// for (var i=0; i < activeWord.length;i++) {
-	// 	console.log(activeWord.charAt(i));
-	// }
-
 	document.onkeyup = function(event) {
-		var userGuess = event.key;
-		userGuess = userGuess.toUpperCase();
-   	    tries--;
-   	    lettersGuessed.push(userGuess);
-   	    // console.log(lettersGuessed);
-		$("#guesses").text(tries);
-		$("#guessed").append(userGuess + " ");
+		var keyCode = event.keyCode;
+		if(isLetter(keyCode)) {
+			var userGuess = event.key;
+			userGuess = userGuess.toUpperCase();
+			//disable repeats!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	   	    tries--;
+	   	    lettersGuessed.push(userGuess); //use this to check for duplicates
+			$("#guesses").text(tries);
+			$("#guessed").append(userGuess + " ");
 
-		// for (var i=0; i < activeWord.length;i++) {
-			// if (userGuess = activeWord.charAt(i)) {
-				// $("#blankSpace-"+i).text(userGuess);
-			// };
-		// };
+			var location = activeClone.indexOf(userGuess);
 
-		if (tries < 1) {
-			tries = 15;
-			$("#guesses").text(tries);			
-			$("#guessed").text("");	
-			lettersGuessed = [];
-			chooseWord();	
-			newWord();
-			console.log(activeWord);
-		}
+			while(location > -1) {
+				$('#letter'+location).text(userGuess);
+				activeClone = activeClone.replace(userGuess, "_");
+				location = activeClone.indexOf(userGuess);
+			}
 
-		// if (tries > 0 && word is completed) {
-		// 	winCount++;
-		// 	$("#wins").text(winCount);
-		// };
+			if (tries >= 0 && activeClone === userGuessWord) {
+				$("#pic").attr("src","assets/images/" + activeWord + ".gif");
+				winCount++;
+				// alert("Congrats, you won!");
+				$("#wins").text(winCount);
+				chooseWord();
+				newWord();
+			}
 
+			if (tries < 0) {
+				// alert("You lose!")			
+				chooseWord();	
+				newWord();
+				$("#pic").attr("src","assets/images/loser.gif");
+			}
+		} 
 	};
 
 
