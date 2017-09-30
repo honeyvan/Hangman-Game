@@ -3,7 +3,7 @@ $(document).ready(function() {
 	var lettersGuessed = [];
 	var tries = 15;
 	var winCount = 0;
-	var words = ['CINDERELLA','ALICE','BAMBI','PINOCCHIO','FANTASIA','MICKEY','DONALD','GOOFY'];
+	var words = ['CINDERELLA','ALICE','BAMBI','PINOCCHIO','FANTASIA','MICKEY','DONALD','GOOFY','HERCULES','POCAHONTAS','NEVERLAND'];
 	var activeWord;
 	var activeClone;
 	var userGuessWord;
@@ -31,6 +31,7 @@ $(document).ready(function() {
 		return str>64 && str <91;
 	}
 
+	//should i move these functions to the bottom?
 	chooseWord();
 	console.log(activeWord);
 	newWord();
@@ -40,38 +41,36 @@ $(document).ready(function() {
 		if(isLetter(keyCode)) {
 			var userGuess = event.key;
 			userGuess = userGuess.toUpperCase();
-			//disable repeats!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	   	    tries--;
-	   	    lettersGuessed.push(userGuess); //use this to check for duplicates
-			$("#guesses").text(tries);
-			$("#guessed").append(userGuess + " ");
 
-			var location = activeClone.indexOf(userGuess);
+		   	if (lettersGuessed.indexOf(userGuess) == -1) {   //disable repeats 
+		   	    tries--;
+		   	    lettersGuessed.push(userGuess);
+				$("#guesses").text(tries);
+				$("#guessed").append(userGuess + " ");
 
-			while(location > -1) {
-				$('#letter'+location).text(userGuess);
-				activeClone = activeClone.replace(userGuess, "_");
-				location = activeClone.indexOf(userGuess);
-			}
+				var location = activeClone.indexOf(userGuess);
 
-			if (tries >= 0 && activeClone === userGuessWord) {
-				$("#pic").attr("src","assets/images/" + activeWord + ".gif");
-				winCount++;
-				// alert("Congrats, you won!");
-				$("#wins").text(winCount);
-				chooseWord();
-				newWord();
-			}
+				while(location > -1) {
+					$('#letter'+location).text(userGuess);
+					activeClone = activeClone.replace(userGuess, "_");
+					location = activeClone.indexOf(userGuess);
+				}
 
-			if (tries < 0) {
-				// alert("You lose!")			
-				chooseWord();	
-				newWord();
-				$("#pic").attr("src","assets/images/loser.gif");
-			}
-		} 
-	};
+				if (tries >= 0 && activeClone === userGuessWord) {
+					$("#pic").attr("src","assets/images/" + activeWord + ".gif");
+					winCount++;
+					$("#wins").text(winCount);
+					chooseWord();
+					newWord();
+				}
 
+				if (tries < 0) {			
+					chooseWord();	
+					newWord();
+					$("#pic").attr("src","assets/images/loser.gif");
+				}
+			} // repeat check
+		} // if isLetter
+	}; // onkeyup
 
-
-});
+}); // document ready
